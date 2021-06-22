@@ -9,7 +9,7 @@
                 <strong>Followers: </strong> {{ followers }}
             </div>
             <form class="user-profile__twoot-form" @submit.prevent="createNewTwoot">
-                <label for="newTwoot"><strong>New Twoot</strong></label>
+                <label for="newTwoot" ><strong>New Twoot</strong> <small :class="{'--exceeded':newTwootCharacterCount > 180}">({{newTwootCharacterCount}}/180) </small> </label> <!--small gets turned to red when exceeded class is activated (check style)-->
                 <textarea id="newTwoot" rows="4" v-model = "newTwootContent"/>
                 <div class="user-profile__create-twoot-type">
                     <label for="newTwootType"><strong>Type: </strong></label>
@@ -20,7 +20,7 @@
                     </select>
                 </div>
 
-                <button>
+                <button :disabled='newTwootCharacterCount > 180'> <!--disable button if wordcount above 180-->
                     Twoot!
                 </button>
             </form>
@@ -66,6 +66,9 @@
         computed: {
             fullName() {
                 return this.user.firstName + ' ' +this.user.lastName
+            },
+            newTwootCharacterCount() {
+                return this.newTwootContent.length;
             }
         },
         methods: {
@@ -130,6 +133,12 @@
                 flex-direction: column;
                 border-top: 1px solid #dfe3e8;
                 padding-top: 20px ;
+
+                label {
+                    small.--exceeded {
+                        color: red; /*exceeded is activated when character count is above 180*/
+                    }
+                }
             }
         }
         /*.user-profile__twoots-wrapper{*/
