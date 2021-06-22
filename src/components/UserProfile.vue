@@ -105,8 +105,9 @@
     .user-profile {
         display: grid;
         grid-template-columns: 1fr 3fr;
-        width: 100%;
+        /*width: 100%;*/  /*commented this line to prevent horizontal scrolling*/
         padding: 50px 5%;
+        overflow: hidden;
 
         .user-profile__user-panel {
             display: flex;              /*changes the layout-structure to flex style*/

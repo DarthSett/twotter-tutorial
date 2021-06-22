@@ -36,6 +36,7 @@
     .twoot-item {
         margin-right: 80px;
         margin-bottom: 5px;
+        width: 100%;
         padding: 20px;              /*sets the padding from borders of div .user-profile_iser-panel*/
         background-color: #FFFFFF;
         border-radius: 5px;         /*rounded edge*/
