@@ -8,6 +8,22 @@
             <div class="user-profile__follower-count">
                 <strong>Followers: </strong> {{ followers }}
             </div>
+            <form class="user-profile__twoot-form" @submit.prevent="createNewTwoot">
+                <label for="newTwoot"><strong>New Twoot</strong></label>
+                <textarea id="newTwoot" rows="4" v-model = "newTwootContent"/>
+                <div class="user-profile__create-twoot-type">
+                    <label for="newTwootType"><strong>Type: </strong></label>
+                    <select id="newTwootType" v-model = "selectedTwootType"> <!--drop down-->
+                        <option :value="option.value" v-for="(option,index) in twootTypes" :key="index">
+                            {{ option.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <button>
+                    Twoot!
+                </button>
+            </form>
         </div>
         <div class="user-profile__twoots-wrapper">
             <TwootItem
@@ -26,6 +42,12 @@
         components: {TwootItem},
         data() {
             return {
+                newTwootContent: '',
+                selectedTwootType:'instant',
+                twootTypes: [
+                    {value: 'draft', name: 'Draft'},
+                    {value: 'instant', name: 'Instant Twoot'}
+                ],
                 followers: 0,
                 user: {
                     id: 1,
@@ -52,6 +74,15 @@
             },
             toggleFavourite(id) {
                 console.log(`favourited twoot with #${id}`)
+            },
+            createNewTwoot() {
+                if (this.newTwootContent && this.selectedTwootType !== 'draft') {
+                    this.user.twoots.unshift( {
+                        id: this.user.twoots.length+1,
+                        content: this.newTwootContent
+                    });
+                    this.newTwootContent = '';
+                }
             }
         },
         mounted() {
@@ -94,6 +125,13 @@
         margin-right: auto;
         padding: 0 10px;
         font-weight: bold;
+    }
+
+    .user-profile__twoot-form{
+        display: flex;
+        flex-direction: column;
+        border-top: 1px solid #dfe3e8;
+        padding-top: 20px ;
     }
 
 </style>
