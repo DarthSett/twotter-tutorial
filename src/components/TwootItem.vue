@@ -32,7 +32,7 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
     .twoot-item {
         margin-right: 80px;
         margin-bottom: 5px;
@@ -43,17 +43,19 @@
         box-sizing: border-box;
         cursor: pointer;
         transition: all 0.25s ease;
-    }
-    .twoot-item__user {
-        font-weight: bold;
-        font-size: larger;
-    }
-    .twoot-item__content {
-        font-style: italic;
+
+        .twoot-item__user {
+            font-weight: bold;
+            font-size: larger;
+        }
+        .twoot-item__content {
+            font-style: italic;
+        }
+
+        &:hover{
+            transform: scale(1.1,1.1); /*hover mechanism*/
+        }
     }
 
-    .twoot-item:hover{
-        transform: scale(1.1,1.1); /*hover mechanism*/
-    }
 
 </style>

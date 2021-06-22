@@ -98,40 +98,45 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
     .user-profile {
         display: grid;
         grid-template-columns: 1fr 3fr;
         width: 100%;
         padding: 50px 5%;
-    }
-    .user-profile__user-panel {
-        display: flex;              /*changes the layout-structure to flex style*/
-        flex-direction: column;     /*sets the flex layout-structure to be of column types*/
-        margin-right: 50px;
-        padding: 10px;              /*sets the padding from borders of div .user-profile_iser-panel*/
-        background-color: #FFFFFF;
-        border-radius: 5px;         /*rounded edge*/
-        border: 1px solid #dfe3e8;  /*sets the width,style,and color of border*/
-    }
-    h1 {
-        margin: 0;                  /*removes margin around h1*/
+
+        .user-profile__user-panel {
+            display: flex;              /*changes the layout-structure to flex style*/
+            flex-direction: column;     /*sets the flex layout-structure to be of column types*/
+            margin-right: 50px;
+            padding: 10px;              /*sets the padding from borders of div .user-profile_iser-panel*/
+            background-color: #FFFFFF;
+            border-radius: 5px;         /*rounded edge*/
+            border: 1px solid #dfe3e8;  /*sets the width,style,and color of border*/
+
+            .user-profile__admin-badge{
+                background-color: rebeccapurple;
+                color: white;
+                border-radius: 5px;
+                margin-right: auto;
+                padding: 0 10px;
+                font-weight: bold;
+            }
+            h1 {
+                margin: 0;                  /*removes margin around h1*/
+            }
+            .user-profile__twoot-form{
+                display: flex;
+                flex-direction: column;
+                border-top: 1px solid #dfe3e8;
+                padding-top: 20px ;
+            }
+        }
+        /*.user-profile__twoots-wrapper{*/
+        /*    display: grid;*/
+        /*    grid-gap: 10px;*/
+        /*}*/
     }
 
-    .user-profile__admin-badge{
-        background-color: rebeccapurple;
-        color: white;
-        border-radius: 5px;
-        margin-right: auto;
-        padding: 0 10px;
-        font-weight: bold;
-    }
-
-    .user-profile__twoot-form{
-        display: flex;
-        flex-direction: column;
-        border-top: 1px solid #dfe3e8;
-        padding-top: 20px ;
-    }
 
 </style>
