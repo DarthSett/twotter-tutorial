@@ -2,8 +2,8 @@
     <div class="user-profile">
         <div class="user-profile__sidebar">
             <div class="user-profile__user-panel">
-                <h1 class="user-profile__username">@{{ user.userName }}</h1> <!--References the user.userName variable from data. Double curly braces are for dynamic data points. Anything from data().return is referencable here using double curly braces-->
-                <div class="user-profile__admin-badge" v-if="user.isAdmin"> <!-- v-if stands for if else -->
+                <h1 class="user-profile__username">@{{ state.user.userName }}</h1> <!--References the state.user.userName variable from setup(). Double curly braces are for dynamic data points. Anything from setup().return is referencable here using double curly braces-->
+                <div class="user-profile__admin-badge" v-if="state.user.isAdmin"> <!-- v-if stands for if else -->
                     Admin
                 </div>
                 <div class="user-profile__follower-count">
@@ -14,9 +14,9 @@
         </div>
         <div class="user-profile__twoots-wrapper">
             <TwootItem
-                    v-for="twoot in user.twoots"
+                    v-for="twoot in state.user.twoots"
                     :key="twoot.id"
-                    :username="user.userName"
+                    :username="state.user.userName"
                     :twoot="twoot" @favourite="toggleFavourite"/> <!-- without :key = error  Elements in iteration expect to have 'v-bind:key' directives -->
         </div>
     </div>
@@ -25,11 +25,12 @@
 <script>
     import TwootItem from "./TwootItem";
     import CreateTwootPanel from "./CreateTwootPanel";
+    import {reactive} from 'vue';
     export default {
         name: 'UserProfile',
         components: {CreateTwootPanel, TwootItem},
-        data() {
-            return {
+        setup () {
+            const state = reactive({
                 followers: 0,
                 user: {
                     id: 1,
@@ -40,14 +41,18 @@
                     isAdmin: true,
                     twoots: [
                         {id: 1, content: "My first twoot! WooHoo"},
-                        {id: 2, content:"Twotter is sugoiiii!!! (❁´▽`❁)*✲ﾟ*"}
+                        {id: 2, content: "Twotter is sugoiiii!!! (❁´▽`❁)*✲ﾟ*"}
                     ]
                 }
+            })
+
+            function addTwoot(twoot) {
+                state.user.twoots.unshift( {id: state.user.twoots.length + 1, content:twoot});
             }
-        },
-        methods: {
-            addTwoot(twoot) {
-                this.user.twoots.unshift( {id: this.user.twoots.length + 1, content:twoot});
+
+            return {
+                state,
+                addTwoot
             }
         }
     };
