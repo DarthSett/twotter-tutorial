@@ -46,7 +46,7 @@
             return {
                 state,
                 newTwootCharacterCount,
-                createNewTwoot
+                createNewTwoot,
             }
         },
         // watch: {

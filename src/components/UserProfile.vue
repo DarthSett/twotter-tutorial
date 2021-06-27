@@ -11,8 +11,11 @@
                 </div>
             </div>
             <CreateTwootPanel @add_twoot="addTwoot"/>
+            <button @click="test">
+                Fetch!
+            </button>
         </div>
-        <div class="user-profile__twoots-wrapper">
+        <div class="user-profile__twoots-wrapper"  ref='scrollComponent'>
             <TwootItem
                     v-for="twoot in state.user.twoots"
                     :key="twoot.id"
@@ -25,7 +28,7 @@
 <script>
     import TwootItem from "./TwootItem";
     import CreateTwootPanel from "./CreateTwootPanel";
-    import {reactive} from 'vue';
+    import {reactive,ref,onMounted,onUnmounted,onBeforeMount} from 'vue';
     export default {
         name: 'UserProfile',
         components: {CreateTwootPanel, TwootItem},
@@ -39,20 +42,52 @@
                     lastName: "Sett",
                     email: 'sourav241196@gmail.com',
                     isAdmin: true,
-                    twoots: [
-                        {id: 1, content: "My first twoot! WooHoo"},
-                        {id: 2, content: "Twotter is sugoiiii!!! (❁´▽`❁)*✲ﾟ*"}
-                    ]
-                }
+                    twoots: []
+                },
+                cursor: 0
             })
 
             function addTwoot(twoot) {
                 state.user.twoots.unshift( {id: state.user.twoots.length + 1, content:twoot});
             }
 
+
+            async function test() {
+                const res = await fetch('https://dukaan.bubbleapps.io/version-test/api/1.1/obj/product?limit=20&cursor='+state.cursor);
+                const data = await res.json();
+                const myArr = data.response.results;
+                myArr.forEach(v => addTwoot(`
+                ${v.brand} ${v.name}
+                ${v.description}
+                Weight: ${v.weight}
+                Rs. ${v['selling price']}`));
+                state.cursor += 20
+            }
+
+            onBeforeMount(()=> {
+                test();
+            })
+
+            onMounted(() => {
+                window.addEventListener("scroll", handleScroll)
+            })
+
+            onUnmounted(() => {
+                window.removeEventListener("scroll", handleScroll)
+            })
+            const handleScroll = () => {
+                let element = scrollComponent.value;
+                if ( element.getBoundingClientRect().bottom < window.innerHeight ) {
+                    test()
+                }
+            }
+
+            const scrollComponent = ref(null)
             return {
+                scrollComponent,
                 state,
-                addTwoot
+                addTwoot,
+                test
             }
         }
     };
