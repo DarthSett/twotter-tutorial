@@ -61,6 +61,7 @@
                 ${v.description}
                 Weight: ${v.weight}
                 Rs. ${v['selling price']}`));
+                console.log(state.user.twoots);
                 state.cursor += 20
             }
 
@@ -75,10 +76,10 @@
             onUnmounted(() => {
                 window.removeEventListener("scroll", handleScroll)
             })
-            const handleScroll = () => {
+            const handleScroll = async () => {
                 let element = scrollComponent.value;
                 if ( element.getBoundingClientRect().bottom < window.innerHeight ) {
-                    test()
+                    await test()
                 }
             }
 
